@@ -1,11 +1,12 @@
 const express = require("express");
 const Assessment = require("../models/Assessment");
 const Student = require("../models/Student");
+const authenticateToken = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 // 🟢 Get All Assessments (For Teachers)
-router.get("/all", async (req, res) => {
+router.get("/all", authenticateToken,  async (req, res) => {
   try {
     const assessments = await Assessment.find().populate("studentId", "name studentId");
     res.json(assessments);
@@ -15,7 +16,7 @@ router.get("/all", async (req, res) => {
   }
 });
 
-router.get("/:studentId", async (req, res) => {
+router.get("/:studentId", authenticateToken, async (req, res) => {
   try {
     // Find the student by studentId
     const student = await Student.findOne({ studentId: req.params.studentId });
@@ -31,7 +32,7 @@ router.get("/:studentId", async (req, res) => {
   }
 });
 
-router.delete("/:assessmentId", async (req, res) => {
+router.delete("/:assessmentId", authenticateToken, async (req, res) => {
   try {
     const assessmentId = req.params.assessmentId;
 

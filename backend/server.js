@@ -28,7 +28,7 @@ app.use("/api/students", studentRoutes);
 app.use("/api/reference-text", referenceTextRoutes);
 app.use("/api/assessments", assessmentRoutes);
 app.use("/api/recordings", recordingRoutes);
-
+app.get("/" , (req, res) => res.send("Hello World") )
 // Start the server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

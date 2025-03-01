@@ -1,10 +1,11 @@
 const express = require("express");
 const ReferenceText = require("../models/ReferenceText");
+const authenticateToken = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 // 🟢 Add a New Reference Text with Topic
-router.post("/add", async (req, res) => {
+router.post("/add", authenticateToken, async (req, res) => {
   try {
     const { topic, textId, textContent } = req.body;
     if (!topic || !textId || !textContent)
@@ -30,7 +31,7 @@ router.post("/add", async (req, res) => {
 });
 
 // 🟢 Get All Reference Texts with Topic
-router.get("/all", async (req, res) => {
+router.get("/all", authenticateToken, async (req, res) => {
   try {
     const texts = await ReferenceText.find();
     res.json(texts);

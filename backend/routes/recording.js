@@ -1,11 +1,12 @@
 const express = require("express");
 const Recording = require("../models/Recording");
 const Student = require("../models/Student");
+const authenticateToken = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
 // 🟢 Get All Recordings
-router.get("/all", async (req, res) => {
+router.get("/all", authenticateToken, async (req, res) => {
   try {
     const recordings = await Recording.find().populate("studentId", "name studentId");
     res.json(recordings);
@@ -16,7 +17,7 @@ router.get("/all", async (req, res) => {
 });
 
 // 🟢 Get Recordings for a Specific Student
-router.get("/:studentId", async (req, res) => {
+router.get("/:studentId", authenticateToken,async (req, res) => {
   try {
     const student = await Student.findOne({ studentId: req.params.studentId }).populate("recordings");
     if (!student) return res.status(404).json({ error: "Student not found" });

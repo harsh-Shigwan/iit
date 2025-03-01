@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@media print {
+    @page {
+      size: A4; /* Set paper size to A4 */
+      margin: 20mm; /* Add margins */
+    }
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    .print-content {
+      width: 210mm; /* A4 width */
+      height: 297mm; /* A4 height */
+      margin: 0 auto; /* Center content */
+      padding: 20mm; /* Add padding */
+      box-sizing: border-box; /* Include padding in width/height */
+    }
+  }

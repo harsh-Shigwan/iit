@@ -39,7 +39,7 @@ router.get("/all", authenticateToken, async (req, res) => {
 });
 
 // 🟢 Get Student by ID (Fetch student details & recordings)
-router.get("/:studentId", async (req, res) => {
+router.get("/:studentId", authenticateToken, async (req, res) => {
   try {
     const student = await Student.findOne({ studentId: req.params.studentId }).populate("recordings" , );
     if (!student) return res.status(404).json({ error: "Student not found" });
