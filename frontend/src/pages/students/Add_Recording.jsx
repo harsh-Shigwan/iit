@@ -4,8 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import baseURL from "../../assets/API_URL";
 import Header from "../../components/Header";
-import { Puff, Triangle } from "react-loader-spinner";
-
+import { BounceLoader } from "react-spinners";
 const Add_Recordings = () => {
   const [formData, setFormData] = useState({ audioFile: "", studentId: "" });
   const token = localStorage.getItem("token");
@@ -167,22 +166,14 @@ const Add_Recordings = () => {
             <button
               type="submit"
               className="text-white text-base font-semibold bg-blue-700 border border-blue-700 px-7 py-4 rounded-lg max-md:px-5"
-              disabled={isSubmitting} // Disable button while submitting
+              disabled={isSubmitting} 
             >
-              {isSubmitting ? "Submitting..." : "Submit"} {/* Change button text based on loading state */}
+              {isSubmitting ? "Submitting..." : "Submit"} 
             </button>
           </div>
           {isSubmitting && (
-            <div className="flex justify-center items-center mt-4">
-            <Puff
-            visible={true}
-            height={100}
-            width={100}
-            color="#4C6FFF"
-            ariaLabel="puff-loading"
-            wrapperStyle={{}}
-            wrapperClass=""
-          />
+            <div className="flex justify-center items-center mt-4  ">
+            <BounceLoader color="#3754db" size={80} />
             </div>
           )}
         </form>
