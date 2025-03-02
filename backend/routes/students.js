@@ -1,24 +1,19 @@
 const express = require("express");
 const Student = require("../models/Student");
-const authenticateToken  = require("../middleware/authMiddleware")
+const authenticateToken = require("../middleware/authMiddleware");
 const router = express.Router();
 
 
-
-
-// 🟢 Register a New Student
-router.post("/register", async (req, res) => {
+router.post("/register", authenticateToken, async (req, res) => {
   try {
     const { name, studentId } = req.body;
     if (!name || !studentId) return res.status(400).json({ error: "Name and studentId are required" });
-
-    // Check if student already exists
-    let student = await Student.findOne({ studentId });
-    if (student) return res.status(400).json({ error: "Student already registered" });
-
-    student = new Student({ name, studentId });
+    let student = await Student.findOne({ studentId, userId: req.user.id });
+    if (student) {
+      return res.status(400).json({ error: "Student already registered" });
+    }
+    student = new Student({ name, studentId, userId: req.user.id });
     await student.save();
-
     res.json({ message: "Student registered successfully", student });
   } catch (err) {
     console.error("Error registering student:", err);
@@ -26,11 +21,10 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// 🟢 Get All Students
+
 router.get("/all", authenticateToken, async (req, res) => {
   try {
-    const students = await Student.find();
-   
+    const students = await Student.find({ userId: req.user.id }); 
     res.json({ students });
   } catch (err) {
     console.error("Error fetching all students:", err);
@@ -38,12 +32,10 @@ router.get("/all", authenticateToken, async (req, res) => {
   }
 });
 
-// 🟢 Get Student by ID (Fetch student details & recordings)
 router.get("/:studentId", authenticateToken, async (req, res) => {
   try {
-    const student = await Student.findOne({ studentId: req.params.studentId }).populate("recordings" , );
+    const student = await Student.findOne({ studentId: req.params.studentId, userId: req.user.id }).populate("recordings");
     if (!student) return res.status(404).json({ error: "Student not found" });
-
     res.json({ student });
   } catch (err) {
     console.error("Error fetching student:", err);
@@ -51,12 +43,12 @@ router.get("/:studentId", authenticateToken, async (req, res) => {
   }
 });
 
-// 🟢 Update Student (Edit)
+
 router.put("/:studentId", authenticateToken, async (req, res) => {
   try {
     const { name } = req.body;
     const student = await Student.findOneAndUpdate(
-      { studentId: req.params.studentId },
+      { studentId: req.params.studentId, userId: req.user.id },  
       { name },
       { new: true }
     );
@@ -68,10 +60,9 @@ router.put("/:studentId", authenticateToken, async (req, res) => {
   }
 });
 
-// 🟢 Delete Student
 router.delete("/:studentId", authenticateToken, async (req, res) => {
   try {
-    const student = await Student.findOneAndDelete({ studentId: req.params.studentId });
+    const student = await Student.findOneAndDelete({ studentId: req.params.studentId, userId: req.user.id }); 
     if (!student) return res.status(404).json({ error: "Student not found" });
     res.json({ message: "Student deleted successfully" });
   } catch (err) {
@@ -79,7 +70,5 @@ router.delete("/:studentId", authenticateToken, async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
-
-
 
 module.exports = router;

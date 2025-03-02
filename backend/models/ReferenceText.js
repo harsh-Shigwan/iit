@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 
 const ReferenceTextSchema = new mongoose.Schema({
-  topic: { type: String, required: true }, // Category or subject of the passage
-  textId: { type: String, unique: true, required: true }, // Unique identifier
-  textContent: { type: String, required: true } // The actual passage or word
+  topic: { type: String, required: true }, 
+  textId: { type: String, unique: true, required: true }, 
+  textContent: { type: String, required: true } 
 });
 
 module.exports = mongoose.model("ReferenceText", ReferenceTextSchema);
