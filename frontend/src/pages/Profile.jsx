@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import baseURL from "../assets/API/API_URL";
+import LoadingScreen from "../components/LoadingScreen";
 const Profile = () => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
@@ -57,9 +58,7 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="text-center text-gray-500 font-semibold mt-10">
-        Loading...
-      </div>
+     <LoadingScreen/>
     );
   }
 
