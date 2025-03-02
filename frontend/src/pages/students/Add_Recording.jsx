@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import baseURL from "../../assets/API/API_URL";
 import Header from "../../components/Header";
 import { BounceLoader } from "react-spinners";
+import LoadingScreen from "../../components/LoadingScreen";
 const Add_Recordings = () => {
   const [formData, setFormData] = useState({ audioFile: "", studentId: "" });
   const token = localStorage.getItem("token");
@@ -93,7 +94,7 @@ const Add_Recordings = () => {
   };
 
   if (isLoading) {
-    return <div>Loading students...</div>;
+    return <LoadingScreen/>;
   }
   if (isError) {
     return <div>Error fetching students. Please try again later.</div>;

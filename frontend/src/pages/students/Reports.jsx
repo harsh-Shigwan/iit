@@ -15,6 +15,7 @@ import red from "../../assets/g_red.svg";
 import orange from "../../assets/g_orange.svg";
 import Header from '../../components/Header';
 import html2canvas from 'html2canvas';
+import LoadingScreen from '../../components/LoadingScreen';
 
 const Reports = () => {
   const { studentId } = useParams();
@@ -77,7 +78,7 @@ const Reports = () => {
     </span>
   ));
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <LoadingScreen/>;
 
   return (
     <div>

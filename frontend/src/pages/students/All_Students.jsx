@@ -17,6 +17,7 @@ import carbon from "../../assets/carbon_search.svg";
 import edit_blue from "../../assets/edit_blue.svg";
 import delete_white from "../../assets/delete_white.svg";
 import baseURL from "../../assets/API/API_URL";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const All_Students = () => {
   const API = `${baseURL}/api/students/all`;
@@ -98,7 +99,7 @@ const All_Students = () => {
     setDeleteAlert({ show: false, message: "", id: null });
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <LoadingScreen/>;
   if (isError) return <div>Error fetching data. Please try again later.</div>;
 
   const filteredData = myData.filter((item) => {

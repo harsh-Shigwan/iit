@@ -21,6 +21,7 @@ import arrow_down from "../../assets/down-arrow.svg";
 import arrow_up from "../../assets/up-arrow.svg";
 import calendar from "../../assets/calendar.svg";
 import add_user from "../../assets/user.svg";
+import LoadingScreen from "../../components/LoadingScreen";
 
 const Assessment = () => {
   const navigate = useNavigate();
@@ -161,7 +162,7 @@ const Assessment = () => {
     setDeleteAlert({ show: false, message: "", id: null });
   };
 
-  if (loading) return <p>Loading students...</p>;
+  if (loading) return <LoadingScreen/>;
   if (error) return <p>{error}</p>;
 
   return (
