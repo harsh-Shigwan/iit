@@ -1,6 +1,6 @@
 import { createContext, useState } from "react";
 import axios from "axios";
-import baseURL from "../assets/API_URL";
+import baseURL from "../assets/API/API_URL";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {

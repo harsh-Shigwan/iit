@@ -24,7 +24,6 @@ const NotFound = () => {
         Oops! Page Not Found
       </motion.h1>
 
-      {/* Description */}
       <motion.p
         className="text-gray-600 text-lg mt-3"
         initial={{ y: -10, opacity: 0 }}
@@ -34,7 +33,7 @@ const NotFound = () => {
         The page you are looking for does not exist.
       </motion.p>
 
-      {/* Button */}
+     
       <motion.div
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}

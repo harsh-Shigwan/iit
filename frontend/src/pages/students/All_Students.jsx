@@ -2,26 +2,42 @@ import React, { useState, useRef } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import { Table, TableHead, TableBody, TableRow, TableCell, TableContainer, TablePagination } from "@mui/material";
+import {
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableContainer,
+  TablePagination,
+} from "@mui/material";
 import generatePDF from "react-to-pdf";
 import download from "../../assets/download.svg";
 import carbon from "../../assets/carbon_search.svg";
 import edit_blue from "../../assets/edit_blue.svg";
 import delete_white from "../../assets/delete_white.svg";
-import baseURL from "../../assets/API_URL";
+import baseURL from "../../assets/API/API_URL";
 
 const All_Students = () => {
   const API = `${baseURL}/api/students/all`;
   const [page, setPage] = useState(0);
   const [rowPerPage, setRowPerPage] = useState(5);
   const [search, setSearch] = useState("");
-  const [deleteAlert, setDeleteAlert] = useState({ show: false, message: "", id: null });
+  const [deleteAlert, setDeleteAlert] = useState({
+    show: false,
+    message: "",
+    id: null,
+  });
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const targetRef = useRef();
   const queryClient = useQueryClient();
 
-  const { data: myData = [], isError, isLoading } = useQuery({
+  const {
+    data: myData = [],
+    isError,
+    isLoading,
+  } = useQuery({
     queryKey: ["students"],
     queryFn: async () => {
       const res = await axios.get(API, {
@@ -56,12 +72,20 @@ const All_Students = () => {
       setDeleteAlert({ show: false, message: "", id: null });
     } catch (error) {
       console.error("API Error:", error);
-      setDeleteAlert({ show: true, message: "Error deleting record. Please try again.", id: null });
+      setDeleteAlert({
+        show: true,
+        message: "Error deleting record. Please try again.",
+        id: null,
+      });
     }
   };
 
   const handleDeleteClick = (id) => {
-    setDeleteAlert({ show: true, message: "Are you sure you want to delete this record?", id });
+    setDeleteAlert({
+      show: true,
+      message: "Are you sure you want to delete this record?",
+      id,
+    });
   };
 
   const handleConfirmDelete = () => {
@@ -103,14 +127,24 @@ const All_Students = () => {
                   onChange={(e) => setSearch(e.target.value)}
                 />
                 <div className="absolute top-[18px] left-[620px] h-[23.75px] flex flex-row ml-28 items-start justify-start">
-                  <img className="w-5 relative h-5 overflow-hidden shrink-0" alt="" src={carbon} />
+                  <img
+                    className="w-5 relative h-5 overflow-hidden shrink-0"
+                    alt=""
+                    src={carbon}
+                  />
                 </div>
                 <button
                   className="absolute top-[11px] left-[905px] rounded-md h-10 bg-theme-white-default box-border w-[156px] flex flex-col items-start justify-start py-2.5 px-5 text-theme-primary-dark border-[1px] border-solid border-theme-primary-dark"
-                  onClick={() => generatePDF(targetRef, { filename: "Student_List.pdf" })}
+                  onClick={() =>
+                    generatePDF(targetRef, { filename: "Student_List.pdf" })
+                  }
                 >
                   <div className="w-24 my-0 mx-[!important] absolute top-[calc(50%_-_8px)] left-[calc(50%_-_48px)] flex flex-row items-center justify-start gap-[8px] z-[0]">
-                    <img className="w-4 relative h-4 overflow-hidden shrink-0" alt="" src={download} />
+                    <img
+                      className="w-4 relative h-4 overflow-hidden shrink-0"
+                      alt=""
+                      src={download}
+                    />
                     <div className="relative font-semibold">Download</div>
                   </div>
                 </button>
@@ -129,13 +163,20 @@ const All_Students = () => {
                     </TableHead>
                     <TableBody>
                       {filteredData
-                        .slice(page * rowPerPage, page * rowPerPage + rowPerPage)
+                        .slice(
+                          page * rowPerPage,
+                          page * rowPerPage + rowPerPage
+                        )
                         .map((student, index) => (
                           <TableRow key={student._id}>
                             <TableCell>{index + 1}</TableCell>
                             <TableCell>{student.name}</TableCell>
                             <TableCell>{student.studentId}</TableCell>
-                            <TableCell>{student.recordings ? student.recordings.length : 0}</TableCell>
+                            <TableCell>
+                              {student.recordings
+                                ? student.recordings.length
+                                : 0}
+                            </TableCell>
                             <TableCell>
                               <div className="flex bg-slate-40 w-24">
                                 <div className="relative bg-theme-white-default h-[52px]">
@@ -143,17 +184,31 @@ const All_Students = () => {
                                     to={`/edit_students/${student.studentId}`}
                                     className="absolute top-[13px] mr-12 rounded-md flex items-center py-2 px-4 border border-theme-primary-default text-theme-primary-default w-20 bg-theme-white-default"
                                   >
-                                    <img className="w-5 h-3 mr-2" alt="" src={edit_blue} />
-                                    <div className="leading-[10px] p-0 font-medium">Edit</div>
+                                    <img
+                                      className="w-5 h-3 mr-2"
+                                      alt=""
+                                      src={edit_blue}
+                                    />
+                                    <div className="leading-[10px] p-0 font-medium">
+                                      Edit
+                                    </div>
                                   </Link>
                                 </div>
                                 <div className="relative bg-theme-primary-dark h-[52px]">
                                   <button
                                     className="absolute top-[13px] left-[100px] rounded flex items-center py-2 px-4 border w-24 border-theme-primary-default text-theme-white-default bg-theme-primary-dark"
-                                    onClick={() => handleDeleteClick(student.studentId)}
+                                    onClick={() =>
+                                      handleDeleteClick(student.studentId)
+                                    }
                                   >
-                                    <img className="w-5 h-3 mr-2" alt="" src={delete_white} />
-                                    <div className="leading-[10px] font-medium">Delete</div>
+                                    <img
+                                      className="w-5 h-3 mr-2"
+                                      alt=""
+                                      src={delete_white}
+                                    />
+                                    <div className="leading-[10px] font-medium">
+                                      Delete
+                                    </div>
                                   </button>
                                 </div>
                               </div>

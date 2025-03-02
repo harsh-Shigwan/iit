@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { format } from 'date-fns';
-import baseURL from '../../assets/API_URL';
+import baseURL from '../../assets/API/API_URL';
 import back from '../../assets/back.svg';
 import print from '../../assets/print.svg';
 import download from '../../assets/white_download.svg';

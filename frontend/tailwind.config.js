@@ -21,6 +21,17 @@ export default {
       fontFamily: {
         "table-body-heading":"Inter",
       },
+      animation: {
+        'spin-slow': 'spin 5s linear infinite',
+        'zoom-in-out': 'zoom 2s ease-in-out infinite',
+      },
+            keyframes: {
+        zoom: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.2)' },
+        },
+      },
+
     },
   },
   plugins: [],

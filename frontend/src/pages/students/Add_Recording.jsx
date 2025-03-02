@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import baseURL from "../../assets/API_URL";
+import baseURL from "../../assets/API/API_URL";
 import Header from "../../components/Header";
 import { BounceLoader } from "react-spinners";
 const Add_Recordings = () => {
@@ -12,11 +12,15 @@ const Add_Recordings = () => {
   const [selectedStudent, setSelectedStudent] = useState("");
   const [studentInput, setStudentInput] = useState("");
   const [showStudentDropdown, setShowStudentDropdown] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false); 
-  const [alert, setAlert] = useState({ show: false, message: "", type: "" })
-  
-  const { data: myData = [], isLoading, isError } = useQuery({
-    queryKey: ["students"], // Unique key for caching
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [alert, setAlert] = useState({ show: false, message: "", type: "" });
+
+  const {
+    data: myData = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["students"],
     queryFn: async () => {
       const res = await axios.get(`${baseURL}/api/students/all`, {
         headers: {
@@ -24,28 +28,22 @@ const Add_Recordings = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      return res.data.students || []; // Return the students array
+      return res.data.students || [];
     },
-    staleTime: 60000, // Cache data for 1 minute
+    staleTime: 60000,
     onError: (error) => {
       console.error("API Error:", error);
     },
   });
-
-  // Handle student input change
   const handleStudentChange = (event) => {
     setStudentInput(event.target.value);
     setShowStudentDropdown(true);
   };
-
-  // Handle student selection from dropdown
   const handleStudentSelect = (student) => {
     setStudentInput(student.name);
     setSelectedStudent(student.studentId);
     setShowStudentDropdown(false);
   };
-
-  // Handle form input change
   const handleChange = (event) => {
     if (event.target.name === "audioFile") {
       setFormData({ ...formData, audioFile: event.target.files[0] });
@@ -53,11 +51,9 @@ const Add_Recordings = () => {
       setFormData({ ...formData, [event.target.name]: event.target.value });
     }
   };
-
-  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsSubmitting(true); // Start loading
+    setIsSubmitting(true);
 
     try {
       await axios.post(
@@ -74,26 +70,31 @@ const Add_Recordings = () => {
         }
       );
 
-      setAlert({ show: true, message: "Recording uploaded successfully!", type: "success" });
+      setAlert({
+        show: true,
+        message: "Recording uploaded successfully!",
+        type: "success",
+      });
       setTimeout(() => {
         setAlert({ show: false, message: "", type: "" });
         navigate("/home");
       }, 2000);
     } catch (error) {
       console.error("API Error:", error);
-      setAlert({ show: true, message: "Error uploading recording. Please try again.", type: "error" });
+      setAlert({
+        show: true,
+        message: "Error uploading recording. Please try again.",
+        type: "error",
+      });
       setTimeout(() => setAlert({ show: false, message: "", type: "" }), 2000);
     } finally {
-      setIsSubmitting(false); // Stop loading
+      setIsSubmitting(false);
     }
   };
 
-  // Loading state for students
   if (isLoading) {
     return <div>Loading students...</div>;
   }
-
-  // Error state for students
   if (isError) {
     return <div>Error fetching students. Please try again later.</div>;
   }
@@ -119,7 +120,9 @@ const Add_Recordings = () => {
                   value={studentInput}
                   onChange={handleStudentChange}
                   onFocus={() => setShowStudentDropdown(true)}
-                  onBlur={() => setTimeout(() => setShowStudentDropdown(false), 200)}
+                  onBlur={() =>
+                    setTimeout(() => setShowStudentDropdown(false), 200)
+                  }
                   name="name"
                 />
                 {showStudentDropdown && (
@@ -127,8 +130,12 @@ const Add_Recordings = () => {
                     {myData
                       .filter(
                         (student) =>
-                          student.name.toLowerCase().includes(studentInput.toLowerCase()) ||
-                          student.studentId.toString().includes(studentInput.toLowerCase())
+                          student.name
+                            .toLowerCase()
+                            .includes(studentInput.toLowerCase()) ||
+                          student.studentId
+                            .toString()
+                            .includes(studentInput.toLowerCase())
                       )
                       .map((student) => (
                         <div
@@ -166,21 +173,31 @@ const Add_Recordings = () => {
             <button
               type="submit"
               className="text-white text-base font-semibold bg-blue-700 border border-blue-700 px-7 py-4 rounded-lg max-md:px-5"
-              disabled={isSubmitting} 
+              disabled={isSubmitting}
             >
-              {isSubmitting ? "Submitting..." : "Submit"} 
+              {isSubmitting ? "Submitting..." : "Submit"}
             </button>
           </div>
           {isSubmitting && (
-            <div className="flex justify-center items-center mt-4  ">
-            <BounceLoader color="#3754db" size={80} />
+            <div className="flex justify-center items-center mt-4 relative">
+            <div className="absolute w-28 h-28 border-4 border-theme-primary-dark rounded-full animate-spin-slow"></div>
+            <div className="absolute w-24 h-24 bg-blue-500 rounded-full animate-pulse opacity-50"></div>
+            <div className="animate-zoom-in-out">
+              <BounceLoader color="#3754db" size={80} />
             </div>
+          </div>
+          
+          
           )}
         </form>
       </fieldset>
 
       {alert.show && (
-        <div className={`fixed top-20 right-5 p-4 rounded-md text-white ${alert.type === "success" ? "bg-green-500" : "bg-red-500"}`}>
+        <div
+          className={`fixed top-20 right-5 p-4 rounded-md text-white ${
+            alert.type === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
           {alert.message}
         </div>
       )}

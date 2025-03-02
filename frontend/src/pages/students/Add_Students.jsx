@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useQueryClient } from "@tanstack/react-query";
-import baseURL from "../../assets/API_URL";
+import baseURL from "../../assets/API/API_URL";
 import Header from "../../components/Header";
 import All_Students from "./All_Students";
 import { useNavigate } from "react-router-dom";
@@ -9,14 +9,14 @@ import { useNavigate } from "react-router-dom";
 const Add_Students = () => {
   const add_studentsAPI = `${baseURL}/api/students/register/`;
   const [formData, setFormData] = useState({ name: "", studentId: "" });
-  const [errorMessage, setErrorMessage] = useState(""); // State for error message
+  const [errorMessage, setErrorMessage] = useState("");
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
-    setErrorMessage(""); // Clear error message when user types
+    setErrorMessage("");
   };
 
   const handleSubmit = async (event) => {
@@ -27,12 +27,13 @@ const Add_Students = () => {
       });
 
       queryClient.invalidateQueries(["students"]);
-      navigate("/home");
+      navigate("/add_students");
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage("Student already registered!");
       } else {
         console.error("API Error:", error);
+        console.log("Error response data:", error.response?.data);
       }
     }
   };
@@ -77,11 +78,8 @@ const Add_Students = () => {
                   name="name"
                 />
               </div>
-          
             </div>
           </div>
-
-        
 
           <div className="flex justify-between gap-5 mt-8 self-end">
             <button
@@ -99,7 +97,7 @@ const Add_Students = () => {
           </div>
         </form>
       </fieldset>
-    
+
       <All_Students />
     </div>
   );

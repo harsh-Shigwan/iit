@@ -2,33 +2,28 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
-import baseURL from "../../assets/API_URL";
+import baseURL from "../../assets/API/API_URL";
 
 const Edit_Student = () => {
   const { studentId } = useParams();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const edit_studentsAPI = `${baseURL}/api/students/${studentId}`;
-const [alert, setAlert] = useState({ show: false, message: "", type: "" })
+  const [alert, setAlert] = useState({ show: false, message: "", type: "" });
   const [formData, setFormData] = useState({
     name: "",
     studentId: "",
   });
 
- 
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
         const response = await axios.get(edit_studentsAPI, {
-          headers: { 
+          headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`
-
-           },
+            Authorization: `Bearer ${token}`,
+          },
         });
-        // console.log("API Response edit:", response.data);
-
-        // Ensure API returns correct structure
         if (response.data.student) {
           setFormData({
             name: response.data.student.name || "",
@@ -44,7 +39,6 @@ const [alert, setAlert] = useState({ show: false, message: "", type: "" })
     if (token) fetchStudentData();
   }, [studentId, token]);
 
-  // Handle input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevData) => ({
@@ -53,34 +47,39 @@ const [alert, setAlert] = useState({ show: false, message: "", type: "" })
     }));
   };
 
-  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     try {
       const response = await axios.put(edit_studentsAPI, formData, {
-        headers: { 
+        headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
       });
-  
-      setAlert({ show: true, message: "Student updated successfully!", type: "success" });
-  
+
+      setAlert({
+        show: true,
+        message: "Student updated successfully!",
+        type: "success",
+      });
+
       setTimeout(() => {
         setAlert({ show: false, message: "", type: "" });
-        navigate("/add_students"); // Navigate after alert disappears
-        window.location.reload();  // Reload only after navigating
+        navigate("/add_students");
+        window.location.reload();
       }, 2000);
-  
     } catch (error) {
       console.error("API Error:", error);
-      setAlert({ show: true, message: "Error updating student. Please try again.", type: "error" });
-  
+      setAlert({
+        show: true,
+        message: "Error updating student. Please try again.",
+        type: "error",
+      });
+
       setTimeout(() => setAlert({ show: false, message: "", type: "" }), 2000);
     }
   };
-  
 
   return (
     <div className="bg-whitesmoke h-screen">
@@ -137,7 +136,11 @@ const [alert, setAlert] = useState({ show: false, message: "", type: "" })
         </form>
       </fieldset>
       {alert.show && (
-        <div className={`fixed top-20 right-5 p-4 rounded-md text-white ${alert.type === "success" ? "bg-green-500" : "bg-red-500"}`}>
+        <div
+          className={`fixed top-20 right-5 p-4 rounded-md text-white ${
+            alert.type === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
           {alert.message}
         </div>
       )}
