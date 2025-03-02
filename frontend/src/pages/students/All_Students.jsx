@@ -163,8 +163,7 @@ const All_Students = () => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {filteredData
-                        .slice(
+                      {filteredData .reverse().slice(
                           page * rowPerPage,
                           page * rowPerPage + rowPerPage
                         )

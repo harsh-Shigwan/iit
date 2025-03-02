@@ -7,7 +7,6 @@ ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, T
 const LineChart = ({ assessmentData }) => {
   if (!assessmentData || assessmentData.length === 0) return <p>No data available</p>;
 
-  // Extract dates, WCPM, Speech Rate, and Pron Score
   const dates = assessmentData.map((entry) => entry.date);
   const wcpm = assessmentData.map((entry) => entry.wcpm);
   const speechRate = assessmentData.map((entry) => entry.speech_rate);

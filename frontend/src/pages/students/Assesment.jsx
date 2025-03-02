@@ -114,6 +114,7 @@ const Assessment = () => {
         );
         setStudents(validStudents);
         setResponseTime((performance.now() - startTime).toFixed(2));
+        
       } catch (err) {
         setError("Failed to fetch students");
         console.error("Error fetching students:", err.response?.data);

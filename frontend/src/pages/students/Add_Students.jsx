@@ -13,7 +13,7 @@ const Add_Students = () => {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-
+ const [alert, setAlert] = useState({ show: false, message: "", type: "" });
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
     setErrorMessage("");
@@ -27,13 +27,27 @@ const Add_Students = () => {
       });
 
       queryClient.invalidateQueries(["students"]);
-      navigate("/add_students");
+      setAlert({
+        show: true,
+        message: "Recording uploaded successfully!",
+        type: "success",
+      });
+      setTimeout(() => {
+        setAlert({ show: false, message: "", type: "" });
+        navigate("/add_students");
+      }, 2000);
     } catch (error) {
       if (error.response && error.response.status === 400) {
         setErrorMessage("Student already registered!");
       } else {
         console.error("API Error:", error);
-        console.log("Error response data:", error.response?.data);
+        //console.log("Error response data:", error.response?.data);
+        setAlert({
+          show: true,
+          message: "Error uploading recording. Please try again.",
+          type: "error",
+        });
+        setTimeout(() => setAlert({ show: false, message: "", type: "" }), 2000);
       }
     }
   };
@@ -97,7 +111,15 @@ const Add_Students = () => {
           </div>
         </form>
       </fieldset>
-
+      {alert.show && (
+        <div
+          className={`fixed top-20 right-5 p-4 rounded-md text-white ${
+            alert.type === "success" ? "bg-green-500" : "bg-red-500"
+          }`}
+        >
+          {alert.message}
+        </div>
+      )}
       <All_Students />
     </div>
   );

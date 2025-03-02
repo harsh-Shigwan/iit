@@ -28,7 +28,7 @@ const DoughnutChart = ({ correct, incorrect }) => {
     color: "#16192C" 
     },
     },
-    cutout: "50%", // Controls the center cutout size
+    cutout: "50%", 
     responsive: true,
     maintainAspectRatio: false,
   };

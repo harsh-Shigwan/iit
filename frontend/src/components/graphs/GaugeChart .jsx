@@ -10,9 +10,9 @@ const GaugeChart = ({ speechRate }) => {
   const COLORS = ["rgb(231, 24, 49)", "rgb(239, 198, 0)", "rgb(140, 214, 16)"];
 
   const getSpeechRateCategory = (rate) => {
-    if (rate < 1.9) return 0; // Slow (Red)
-    if (rate >= 1.9 && rate < 2.5) return 1; // Normal (Yellow)
-    return 2; // Fast (Green)
+    if (rate < 1.9) return 0; 
+    if (rate >= 1.9 && rate < 2.5) return 1; 
+    return 2;
   };
 
   const index = getSpeechRateCategory(numericSpeechRate);
@@ -28,8 +28,8 @@ const GaugeChart = ({ speechRate }) => {
   }), [numericSpeechRate, index]);
 
   const options = useMemo(() => ({
-    responsive: false,  // Prevents unnecessary resizing
-    animation: { duration: 500 }, // Reduce animation time
+    responsive: false,  
+    animation: { duration: 500 }, 
     rotation: -90,
     circumference: 180,
     cutout: "70%",

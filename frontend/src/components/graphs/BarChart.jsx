@@ -5,7 +5,6 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const BarChart = ({ wcpm, speechRate, pronScore, percentAttempt }) => {
-  // Normalize Data (Convert to Percentage)
   const maxValues = { wcpm: 200, speechRate: 3.0, pronScore: 1.0, percentAttempt: 100 };
 
   const normalizedData = [
@@ -21,8 +20,8 @@ const BarChart = ({ wcpm, speechRate, pronScore, percentAttempt }) => {
     datasets: [
       {
         label: "WCPM",
-        data: [normalizedData[0], 0, 0, 0], // Assign each data point to a separate dataset for color control
-        backgroundColor: "rgba(55, 84, 219, 0.9)", // Blue
+        data: [normalizedData[0], 0, 0, 0], 
+        backgroundColor: "rgba(55, 84, 219, 0.9)", 
         borderColor: "rgba(255, 255, 255, 1)",
         borderWidth: 0,
         hoverBackgroundColor: "rgba(120, 149, 255, 0.8)",
@@ -46,7 +45,7 @@ const BarChart = ({ wcpm, speechRate, pronScore, percentAttempt }) => {
       {
         label: "Pronunciation Score",
         data: [0, 0, normalizedData[2], 0], 
-        backgroundColor: "rgba(255, 68, 55, 0.8)", // Pink
+        backgroundColor: "rgba(255, 68, 55, 0.8)",
         borderColor: "rgba(253, 129, 156, 1)",
         borderWidth: 0,
         hoverBackgroundColor: "rgba(255, 68, 55, 0.5)",
@@ -58,7 +57,7 @@ const BarChart = ({ wcpm, speechRate, pronScore, percentAttempt }) => {
       {
         label: "Percent Attempt",
         data: [0, 0, 0, normalizedData[3]], 
-        backgroundColor: "rgba(75, 192, 192, 1)", // Teal
+        backgroundColor: "rgba(75, 192, 192, 1)", 
         borderColor: "rgba(75, 192, 192, 1)",
         borderWidth: 0,
         hoverBackgroundColor: "rgba(75, 192, 192, 0.8)",
@@ -86,7 +85,7 @@ const BarChart = ({ wcpm, speechRate, pronScore, percentAttempt }) => {
         grid: { display: false },
         ticks: { display: true },
         beginAtZero: true,
-        max: 100, // Scale Y-axis from 0 to 100%
+        max: 100, 
       },
     },
   };
