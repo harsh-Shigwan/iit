@@ -1,18 +1,16 @@
-# 🗣️ Speech Assessment System
+# 🗣️ Speech Assessment System - Frontend
 
 ## 📌 Project Overview
 
-This is a **Full-Stack Speech Assessment System** built using **React (Vite) & Node.js**. It allows teachers to:
+This is the **frontend** of the Speech Assessment System, providing a user-friendly interface for teachers to **manage students, upload speech recordings, view assessments, and generate reports**. The webpage is designed for smooth navigation, interactive data visualization, and optimized performance.
 
-- Manage students
-- Upload and analyze speech recordings
-- View & export assessment reports with **interactive charts**
+## 🌍 Live Demo
+
+🔗 **Frontend Hosted Link:** [iit-bombay-project-frontend.onrender.com](https://iit-bombay-project-frontend.onrender.com)
 
 ## 🚀 Tech Stack
 
-### **Frontend:**
-
-- **React.js (Vite)** - Framework
+- **React.js (Vite)** - Frontend framework
 - **Tailwind CSS, Styled Components** - Styling
 - **MUI** - UI components
 - **Chart.js & react-chartjs-2** - Data visualization
@@ -22,21 +20,7 @@ This is a **Full-Stack Speech Assessment System** built using **React (Vite) & N
 - **html2canvas, react-to-pdf, react-to-print** - Report exporting
 - **framer-motion** - Animations
 
-### **Backend:**
-
-- **Node.js & Express.js** - Backend framework
-- **MongoDB (Mongoose)** - Database
-- **JWT Authentication** - Secure API access
-- **AWS S3** - Audio file storage
-- **SAS API** - Speech analysis
-
-## 🌍 Live Demo
-
-🔗 **Frontend:** [iit-bombay-project-frontend.onrender.com](https://iit-bombay-project-frontend.onrender.com)
-
 ## 📂 Folder Structure
-
-### **Frontend**
 
 ```
 frontend/
@@ -64,31 +48,12 @@ frontend/
 ├── main.jsx         # Entry point
 ```
 
-### **Backend**
-
-```
-backend/
-├── models/          # Mongoose schemas
-│   ├── Teacher.js   # Teacher model
-│   ├── Student.js   # Student model
-│   ├── Recording.js # Audio recordings
-│   ├── Report.js    # Speech assessment reports
-├── routes/          # API endpoints
-│   ├── auth.js      # Authentication routes
-│   ├── students.js  # Student management
-│   ├── upload.js    # AWS S3 upload & SAS API analysis
-├── middleware/      # JWT authentication
-├── config/          # Configuration files
-├── services/        # External integrations (AWS, SAS API)
-├── server.js        # Entry point
-```
-
 ## 🔑 Features
 
 - **Authentication**: Secure login & signup using JWT.
 - **Student Management**: Add, edit, delete students with pagination.
-- **Audio Upload & Analysis**: Upload recordings to AWS S3 & analyze using SAS API.
-- **Data Visualization**: View speech assessment reports with **interactive charts**.
+- **Speech Recording Upload**: Submit recordings for analysis.
+- **Data Visualization**: View assessment results with interactive charts.
 - **Report Exporting**: Download reports as **PDF** or **print** them.
 - **Optimized Performance**:
   - **TanStack React Query** for caching API responses.
@@ -96,66 +61,34 @@ backend/
 
 ## 🛠️ Setup & Installation
 
-### **Backend Setup**
+### **1️⃣ Clone the Repository**
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/harsh-Shigwan/iit.git
-   cd backend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Create a `.env` file and add:
-   ```env
-   MONGO_URI=your_mongodb_uri
-   JWT_SECRET=your_secret_key
-   AWS_ACCESS_KEY=your_aws_access_key
-   AWS_SECRET_KEY=your_aws_secret_key
-   AWS_BUCKET_NAME=your_s3_bucket
-   AWS_REGION=your_region
-   SAS_API_URL=your_sas_api_url
-   SAS_API_KEY=your_sas_api_key
-   ```
-4. Start the backend:
-   ```bash
-   npm run dev
-   ```
+```bash
+git clone https://github.com/harsh-Shigwan/iit.git
+cd frontend
+```
 
-### **Frontend Setup**
+### **2️⃣ Install Dependencies**
 
-1. Navigate to frontend folder:
-   ```bash
-   cd frontend
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Start the development server:
-   ```bash
-   npm run dev
-   ```
+```bash
+npm install
+```
+
+### **3️⃣ Start the Development Server**
+
+```bash
+npm run dev
+```
 
 ## 🚀 Deployment
 
-- **Backend & Frontend**: Deploy on **Render**
-- **Example Deployment Steps**:
-  1. **Create a Render Account** at [Render](https://render.com)
-  2. **Connect your GitHub repository**
-  3. **Deploy Backend**:
-     - Create a new **Web Service**
-     - Select **Node.js environment**
-     - Add your **environment variables** from `.env`
-     - Set **Start Command** to `npm start`
-  4. **Deploy Frontend**:
-     - Create a new **Static Site**
-     - Set **Build Command** to `npm run build`
-     - Set **Publish Directory** to `dist`
-  5. **Deploy & Test!** 🎉
+### **Deploy on Render**
 
-
-
+1. **Create a Render Account** at [Render](https://render.com)
+2. **Connect your GitHub repository**
+3. **Create a new Static Site**
+4. **Set Build Command:** `npm run build`
+5. **Set Publish Directory:** `dist`
+6. **Deploy & Test!** 🎉
 
 
